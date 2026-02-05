@@ -134,7 +134,7 @@ restartButton.addEventListener('click', () => {
 
     generateFood()
     render()
-    intervalId = setInterval(gameLoop, 450)
+    intervalId = setInterval(gameLoop, 50)
 })
 
 //  CONTROLS
