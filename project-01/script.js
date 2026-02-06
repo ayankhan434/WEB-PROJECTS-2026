@@ -1,154 +1,168 @@
+const board = document.querySelector(".board");
+const scoreEl = document.getElementById("score");
+const highScoreEl = document.getElementById("high-score");
+const timeEl = document.getElementById("time");
 
-const board = document.querySelector('.board')
-const blockHeight = 60
-const blockWidth = 60
+const modal = document.querySelector(".modal");
+const startScreen = document.querySelector(".start-game");
+const gameOverScreen = document.querySelector(".game-over");
+const startBtn = document.querySelector(".btn-start");
+const restartBtn = document.querySelector(".btn-restart");
 
-const startButton = document.querySelector('.btn-start')
-const modal = document.querySelector('.modal')
+const BOARD_SIZE = 15;
+let snake = [];
+let food = {};
+let direction = "RIGHT";
+let gameInterval;
+let timeInterval;
+let score = 0;
+let time = 0;
 
-const startGameModal = document.querySelector('.start-game')
-const gameOverModal = document.querySelector('.game-over')
-const restartButton = document.querySelector('.btn-restart')
+let highScore = localStorage.getItem("highScore") || 0;
+highScoreEl.innerText = highScore;
 
-const highScoreElement = document.querySelector('#high-score')
-const scoreElement = document.querySelector('#score')
-const timeElement = document.querySelector('#time')
+/* ---------------- INIT BOARD ---------------- */
+function createBoard() {
+    board.innerHTML = "";
+    board.style.gridTemplateColumns = `repeat(${BOARD_SIZE}, 1fr)`;
+    board.style.gridTemplateRows = `repeat(${BOARD_SIZE}, 1fr)`;
 
-const cols = Math.floor(board.clientWidth / blockWidth)
-const rows = Math.floor(board.clientHeight / blockHeight)
-
-let highScore = localStorage.getItem("highscore") || 0;
-highScoreElement.innerText = highScore;
-
-let intervalId = null
-
-let food = {
-    row: Math.floor(Math.random() * rows),
-    col: Math.floor(Math.random() * cols)
-}
-
-const blocks = {}
-
-let snake = [{ row: 1, col: 5 }]
-let direction = 'right'
-
-let score = 0
-
-//  CREATE BOARD
-for (let row = 0; row < rows; row++) {
-    for (let col = 0; col < cols; col++) {
-        const block = document.createElement('div')
-        block.classList.add('block')
-        block.style.width = `${blockWidth}px`
-        block.style.height = `${blockHeight}px`
-        board.appendChild(block)
-        blocks[`${row}-${col}`] = block
+    for (let i = 0; i < BOARD_SIZE * BOARD_SIZE; i++) {
+        const div = document.createElement("div");
+        div.classList.add("block");
+        board.appendChild(div);
     }
 }
 
-//  RENDER
-function render() {
-    Object.values(blocks).forEach(block => {
-        block.classList.remove('fill', 'food')
-    })
+/* ---------------- START GAME ---------------- */
+function startGame() {
+    modal.style.display = "none";
+    startScreen.style.display = "flex";
+    gameOverScreen.style.display = "none";
 
-    snake.forEach(seg => {
-        blocks[`${seg.row}-${seg.col}`].classList.add('fill')
-    })
+    snake = [{ x: 7, y: 7 }];
+    direction = "RIGHT";
+    score = 0;
+    time = 0;
 
-    blocks[`${food.row}-${food.col}`].classList.add('food')
+    scoreEl.innerText = score;
+    score
+    timeEl.innerText = time;
+
+    createFood();
+    draw();
+
+    clearInterval(gameInterval);
+    clearInterval(timeInterval);
+
+    gameInterval = setInterval(moveSnake, 200);
+    timeInterval = setInterval(() => {
+        time++;
+        timeEl.innerText = time;
+    }, 1000);
 }
 
-//  NEW FOOD
-function generateFood() {
-    food = {
-        row: Math.floor(Math.random() * rows),
-        col: Math.floor(Math.random() * cols)
-    }
+/* ---------------- DRAW ---------------- */
+function draw() {
+    document.querySelectorAll(".block").forEach(b => {
+        b.classList.remove("fill", "food", "head");
+    });
+
+    snake.forEach((part, index) => {
+        const i = part.y * BOARD_SIZE + part.x;
+        const block = board.children[i];
+        block.classList.add(index === 0 ? "head" : "fill");
+    });
+
+    const foodIndex = food.y * BOARD_SIZE + food.x;
+    board.children[foodIndex].classList.add("food");
 }
 
-//  GAME LOOP
-function gameLoop() {
-    let head = { ...snake[0] }
+/* ---------------- MOVE ---------------- */
+function moveSnake() {
+    const head = { ...snake[0] };
 
-    if (direction === 'left') head.col--
-    if (direction === 'right') head.col++
-    if (direction === 'up') head.row--
-    if (direction === 'down') head.row++
+    if (direction === "UP") head.y--;
+    if (direction === "DOWN") head.y++;
+    if (direction === "LEFT") head.x--;
+    if (direction === "RIGHT") head.x++;
 
-    //  WALL COLLISION
+    /* WALL COLLISION */
     if (
-        head.row < 0 || head.row >= rows ||
-        head.col < 0 || head.col >= cols
+        head.x < 0 ||
+        head.y < 0 ||
+        head.x >= BOARD_SIZE ||
+        head.y >= BOARD_SIZE
     ) {
-        gameOver()
-        return
+        endGame();
+        return;
     }
 
-    // 🍽 FOOD EAT
-    if (head.row === food.row && head.col === food.col) {
-        snake.unshift(head)
-        score += 10
-        scoreElement.innerText = score
-
-
-        generateFood()
-        if (score > highscore) {
-            highScore = score;
-            localStorage.setItem("highscore", highScore.toString());
-            highScoreElement.innerText = highScore;
+    /* BODY COLLISION */
+    for (let part of snake) {
+        if (part.x === head.x && part.y === head.y) {
+            endGame();
+            return;
         }
-    } else {
-        snake.pop()
-        snake.unshift(head)
     }
 
-    render()
+    snake.unshift(head);
+
+    /* FOOD EAT */
+    if (head.x === food.x && head.y === food.y) {
+        score += 10;
+        scoreEl.innerText = score;
+        createFood();
+    } else {
+        snake.pop();
+    }
+
+    draw();
 }
 
-//  START GAME
-startButton.addEventListener('click', () => {
-    modal.style.display = 'none'
-    generateFood()
-    render()
-    intervalId = setInterval(gameLoop, 150)
-})
+/* ---------------- FOOD ---------------- */
+function createFood() {
+    food = {
+        x: Math.floor(Math.random() * BOARD_SIZE),
+        y: Math.floor(Math.random() * BOARD_SIZE),
+    };
 
-//  RESTART
-restartButton.addEventListener('click', () => {
-    clearInterval(intervalId)
-    snake.forEach(seg => {
-        blocks[`${seg.row}-${seg.col}`].classList.remove('fill')
-    })
-    score = 0
-    time = `00:00`
-
-    snake = [{ row: 1, col: 5 }]
-    direction = 'right'
-    score = 0
-    scoreElement.innerText = score
-
-    startGameModal.style.display = 'flex'
-    gameOverModal.style.display = 'none'
-    modal.style.display = 'none'
-
-    generateFood()
-    render()
-    intervalId = setInterval(gameLoop, 50)
-})
-
-//  CONTROLS
-addEventListener('keydown', e => {
-    if (e.key === 'ArrowLeft' && direction !== 'right') direction = 'left'
-    if (e.key === 'ArrowRight' && direction !== 'left') direction = 'right'
-    if (e.key === 'ArrowUp' && direction !== 'down') direction = 'up'
-    if (e.key === 'ArrowDown' && direction !== 'up') direction = 'down'
-})
-
-//  GAME OVER
-function gameOver() {
-    clearInterval(intervalId)
-    modal.style.display = 'flex'
-    startGameModal.style.display = 'none'
-    gameOverModal.style.display = 'flex'
+    // food should not spawn on snake
+    snake.forEach(part => {
+        if (part.x === food.x && part.y === food.y) {
+            createFood();
+        }
+    });
 }
+
+/* ---------------- GAME OVER ---------------- */
+function endGame() {
+    clearInterval(gameInterval);
+    clearInterval(timeInterval);
+
+    if (score > highScore) {
+        highScore = score;
+        localStorage.setItem("highScore", highScore);
+        highScoreEl.innerText = highScore;
+    }
+
+    modal.style.display = "flex";
+    startScreen.style.display = "none";
+    gameOverScreen.style.display = "flex";
+}
+
+/* ---------------- CONTROLS ---------------- */
+document.addEventListener("keydown", e => {
+    if (e.key === "ArrowUp" && direction !== "DOWN") direction = "UP";
+    if (e.key === "ArrowDown" && direction !== "UP") direction = "DOWN";
+    if (e.key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
+    if (e.key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
+});
+
+/* ---------------- BUTTONS ---------------- */
+startBtn.addEventListener("click", startGame);
+restartBtn.addEventListener("click", startGame);
+
+/* ---------------- INIT ---------------- */
+modal.style.display = "flex";
+createBoard();

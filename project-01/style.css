@@ -81,12 +81,13 @@ section .infos {
     border-radius: var(--border-radius-md);
     flex-grow: 1;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-    grid-template-rows: repeat(auto-fill, minmax(60px, 1fr));
+    grid-template-columns: repeat(15, 1fr);
+    grid-template-rows: repeat(15, 1fr);
 }
 
 .block {
-
+    height: 100%;
+    width: 100%;
     border-radius: 50%;
     color: black;
     border: 1px solid var(--border-primary-color);
@@ -135,4 +136,12 @@ section .infos {
 
 .modal .game-over {
     display: none;
+}
+
+.head {
+    background-color: rgb(0, 0, 0);
+}
+
+.fill {
+    background-color: rgb(223, 223, 223);
 }
