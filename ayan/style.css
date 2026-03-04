@@ -12,7 +12,7 @@ body {
 }
 
 #page1 {
-    height: 100vh;
+    min-height: 180vh;
     width: 100%;
     background-color: #EFEAE3;
     position: relative;
@@ -81,4 +81,137 @@ body {
 #nav-2 h4:hover a {
     color: azure;
     transition: all 0.3s ease;
+}
+
+#slogan {
+    height: 70vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #000000;
+}
+
+#slogan #right-side {
+    height: 100%;
+    width: 50%;
+
+
+}
+
+#slogan #left-side {
+    height: 100%;
+    width: 50%;
+
+}
+
+#slogan #right-side h2 {
+    color: #040202;
+    font-size: 2.2rem;
+    padding-right: 25px;
+    padding-left: 25px;
+    padding-top: 100px;
+    /* gap: 100px; */
+}
+
+#slogan #right-side h3 {
+    color: #0d0808;
+    font-size: 1.5rem;
+    padding-right: 25px;
+    padding-left: 25px;
+    padding-top: 100px;
+
+}
+
+#slogan #left-side h1 {
+    color: #180e0ec4;
+    font-size: 6.5rem;
+    padding-right: 25px;
+    padding-left: 200px;
+    padding-top: 40px;
+}
+
+#page1 video {
+    position: relative;
+    margin-top: 4vw;
+    margin-left: 2vw;
+    /* margin-right: 2vw; */
+    width: 190%;
+    border-radius: 50px;
+
+}
+
+#hero-design {
+    position: absolute;
+    height: 56vh;
+    width: 56vh;
+    background-color: #3eba00dc;
+    border-radius: 50%;
+    right: 17vh;
+    top: 64vh;
+    filter: blur(20px);
+}
+
+#hero1 {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: #3eba00;
+    border-radius: 50%;
+    filter: blur(20px);
+}
+
+
+#hero2 {
+    position: absolute;
+    height: 33vw;
+    width: 33vw;
+    background-color: #3eba00cd;
+    border-radius: 50%;
+    /*     filter: blur(20px); */
+    animation-name: anime1;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-direction: alternate;
+}
+
+
+
+#hero3 {
+    position: absolute;
+    height: 30vw;
+    width: 30vw;
+    background-color: #3eba00c1;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    filter: blur(20px);
+    animation-name: anime2;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+
+
+    overflow: hidden;
+}
+
+@keyframes anime1 {
+    from {
+        transform: translate(-20%, 20%);
+    }
+
+    to {
+        transform: translate(20%, -20%);
+    }
+
+}
+
+@keyframes anime2 {
+    from {
+        transform: translate(-20%, 10%);
+    }
+
+    to {
+        transform: translate(20%, -10%);
+    }
 }
