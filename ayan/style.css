@@ -192,7 +192,7 @@ body {
     animation-timing-function: linear;
 
 
-    overflow: hidden;
+
 }
 
 @keyframes anime1 {
@@ -214,4 +214,137 @@ body {
     to {
         transform: translate(20%, -10%);
     }
+}
+
+#page2 {
+    min-height: 100vh;
+    width: 100%;
+    background-color: #92878750;
+
+}
+
+/* moving container */
+
+#mooving-text {
+    white-space: nowrap;
+    overflow-x: auto;
+}
+
+#mooving-text::-webkit-scrollbar {
+    display: none;
+}
+
+/* container */
+
+.con {
+    display: inline-block;
+    white-space: nowrap;
+    animation: move 4s linear infinite;
+}
+
+/* text */
+
+.con h1 {
+    display: inline-block;
+    font-size: 9vw;
+    margin-right: 30px;
+}
+
+/* dot */
+
+.gola {
+    margin: 1vw 2vw;
+    height: 40px;
+    width: 40px;
+    background: #3eba00;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 30px;
+}
+
+/* animation */
+
+@keyframes move {
+
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-100%);
+    }
+
+}
+
+#page2-item {
+    height: 70vh;
+    width: 100%;
+    /* background-color: #d9090950; */
+    display: flex;
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+#box1 {
+    height: 75%;
+    width: 45%;
+    /*  background-color: #3eba00; */
+    border-radius: 20px;
+    margin-left: 5vw;
+}
+
+#box1 img {
+    height: 100%;
+    width: 100%;
+    border-radius: 20px;
+}
+
+#box2 {
+    height: 45%;
+    width: 40%;
+    /*  background-color: #3eba00; */
+    border-radius: 20px;
+    margin-right: 5vw;
+    margin-left: 20px;
+
+}
+
+#box2 h2 {
+    color: #000000;
+    font-size: 1.5rem;
+    padding: 50px;
+}
+
+#box2 h4 {
+    color: #000000;
+    font-size: 1.2rem;
+    padding-left: 50px;
+}
+
+
+
+
+
+#dj3 {
+    position: absolute;
+    height: 30vw;
+    width: 30vw;
+    background-color: #3eba00de;
+    border-radius: 50%;
+    filter: blur(25px);
+    animation-name: anime2;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    top: 220vh;
+    left: 650px;
+}
+
+#page3 {
+    min-height: 100vh;
+    width: 100%;
+    background-color: #a50909b9;
+
+
 }
