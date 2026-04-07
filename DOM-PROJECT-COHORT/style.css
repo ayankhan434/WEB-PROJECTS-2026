@@ -1,8 +1,8 @@
  :root{
     --pri:#FFF8EA;
     --sec:#B4846C;
-    --tri1:#FCDEC0;
-        --tri2:#F7F6E5;
+    --tri1:#d79c61;
+    --tri2:#ece9b6;
  }
  @font-face {
     font-family: raju;
@@ -12,7 +12,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: var(--sec);
+    /* background-color: var(--sec); */
     color: var(--pri);
 }
 html,body{
@@ -26,4 +26,59 @@ height: 100%;
 h1{
     font-family: raju;
     color: var(--pri);
+}
+nav{
+    position:fixed;
+    width: 100%;
+    height: 60px;
+    background-color: var(--tri1);
+}
+section.allelems {
+    height: 100%;
+    width: 100%;
+    padding: 40px;
+    padding-top: 80px;
+background-color: var(--tri1);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 40px;
+}
+.elem{
+ background-color:var(--tri1);
+     /* padding: 30px 40px; */
+     border-radius: 20px;
+     height: 400px;
+     width: 250px;
+     border-radius: 10px;
+      overflow: hidden; 
+     position: relative;
+    transition: all 0.3s ease;
+}
+.elem img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    
+}
+.elem h2{
+    color: rgb(255, 255, 255);
+    position: absolute;
+    bottom: 3%;
+    right: 5%;
+    font-size: 30px;
+
+}
+.elem:active{
+    transform: scale(0.95);
+
+}
+
+.fullElem{
+    height: 100%;
+    width: 100%;
+    border-color: #beba61;
+    padding: 40px;
+    font-size: 60px;
+    display: none;
 }
