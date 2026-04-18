@@ -3,6 +3,7 @@
     --sec:#d4510a;
     --tri1:#d79c61;
     --tri2:#ece9b6;
+    --tri3:black;
  }
  @font-face {
     font-family: raju;
@@ -205,12 +206,37 @@ margin-bottom: 20px;
     margin-bottom: 10px;
 }
 .task h5{
-  /*  background-color: #c22828; */
+  display: flex;
+  align-items: center;
     color: black;
 background-color: #ffffff00;
     font-size: 30px;
- 
+ gap: 10px;
 }
+/* .task h5 span {
+    background-color: rgb(255, 0, 0);
+    font-size: 30px;
+} */
+.task h5 span{
+   background-color: red;
+    color:black;
+    
+    padding: 5px 5px;
+    font-size: 10px;
+    border-radius: 50px;
+   /*  gap: 50px; */
+     
+}
+.task h5 span.true{
+
+opacity: 1;
+font-size: 20px;
+}
+.task h5 span.false{
+ opacity: 0;
+ background-color: transparent;
+}
+
 .task button{
     padding: 5px 10px;
     background-color: rgb(72, 216, 0);
@@ -218,4 +244,23 @@ background-color: #ffffff00;
     border: none;
     outline: none;
     border-radius: 5px;
+    gap: 10px;
+}
+.mark-imp{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 10px 0;
+    width: 100%;
+    text-align: left;
+    font-size: 20px;
+    background-color: var(--tri1);
+}
+.mark-imp input{
+    width: 20px;
+    height: 20px;
+}
+.mark-imp label{
+    color: white;
+    background-color: var(--tri1);
 }
