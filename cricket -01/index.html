@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CricketStore India - Official Cricket Equipment</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="spinner-overlay hidden" id="spinnerOverlay">
+    <div class="spinner"></div>
+    <p>Loading...</p>
+  </div>
+
+  <div id="toast"></div>
+
+  <nav>
+    <div class="container nav-inner">
+      <button class="logo" onclick="scrollTo({top:0,behavior:'smooth'})">CRICKET<span>STORE</span></button>
+      <ul class="nav-links">
+        <li><a href="#products" class="active" onclick="setNavActive(this)">Products</a></li>
+        <li><a href="#brands" onclick="setNavActive(this)">Brands</a></li>
+        <li><a href="#promo" onclick="setNavActive(this)">Offers</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="nav-icon-btn" onclick="openSearch()" title="Search">🔍</button>
+        <button class="nav-icon-btn" onclick="openCart()" title="Cart">🛒<span class="nav-badge hidden" id="cartBadge">0</span></button>
+        <button class="auth-btn" id="authBtn" onclick="openAuthModal()">Login</button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-tag">🏏 Official Cricket Equipment - India</div>
+        <h1>PLAY LIKE<br><span>A PRO</span></h1>
+        <p>India ka sabse trusted cricket equipment store. Top brands ke bats, gloves, balls aur accessories - sabkuch ek jagah, sabse acha price mein.</p>
+        <div class="hero-btns">
+          <button class="btn btn-gold" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop Now</button>
+          <button class="btn btn-hero-outline" onclick="document.getElementById('brands').scrollIntoView({behavior:'smooth'})">View Brands</button>
+        </div>
+        <div class="hero-meta">
+          <div><strong>Free Shipping</strong><span> on ₹999+</span></div>
+          <div><strong>Easy Returns</strong><span> 7 days</span></div>
+          <div><strong>Cash on Delivery</strong><span> available</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-bg-text">CRICKET</div>
+  </section>
+
+  <div class="stats-bar">
+    <div class="container stats-inner">
+      <div class="stat-item"><div class="stat-num">10K+</div><div class="stat-label">Happy Customers</div></div>
+      <div class="stat-item"><div class="stat-num" id="productCount">0</div><div class="stat-label">Products</div></div>
+      <div class="stat-item"><div class="stat-num">25+</div><div class="stat-label">Top Brands</div></div>
+      <div class="stat-item"><div class="stat-num">FREE</div><div class="stat-label">Shipping ₹999+</div></div>
+    </div>
+  </div>
+
+  <section class="cat-section">
+    <div class="container">
+      <div class="section-header"><h2>SHOP BY CATEGORY</h2><div class="underline"></div></div>
+      <div class="cat-grid">
+        <button class="cat-card active" onclick="setCategory(this,'all')"><span>🏏</span><b>All Items</b><small id="catAll">0 products</small></button>
+        <button class="cat-card" onclick="setCategory(this,'bat')"><span>🪵</span><b>Cricket Bats</b><small id="catBat">0 products</small></button>
+        <button class="cat-card" onclick="setCategory(this,'glove')"><span>🧤</span><b>Gloves</b><small id="catGlove">0 products</small></button>
+        <button class="cat-card" onclick="setCategory(this,'ball')"><span>🔴</span><b>Cricket Balls</b><small id="catBall">0 products</small></button>
+        <button class="cat-card" onclick="setCategory(this,'bag')"><span>🎒</span><b>Kit Bags</b><small id="catBag">0 products</small></button>
+        <button class="cat-card" onclick="setCategory(this,'accessory')"><span>⭐</span><b>Accessories</b><small id="catAccessory">0 products</small></button>
+      </div>
+    </div>
+  </section>
+
+  <div class="search-bar-wrap" id="searchBarWrap">
+    <div class="container search-inner">
+      <div class="search-input-wrap"><span>🔍</span><input type="text" id="searchInput" placeholder="Bat, ball, gloves search karein..." oninput="onSearch(this.value)"></div>
+      <div class="filter-pills">
+        <button class="filter-pill active" onclick="setPriceFilter(this,'all')">Sab</button>
+        <button class="filter-pill" onclick="setPriceFilter(this,'under2k')">Under ₹2,000</button>
+        <button class="filter-pill" onclick="setPriceFilter(this,'2k5k')">₹2K - ₹5K</button>
+        <button class="filter-pill" onclick="setPriceFilter(this,'above5k')">₹5K+</button>
+      </div>
+      <select class="sort-select" onchange="onSort(this.value)">
+        <option value="default">Sort: Default</option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+        <option value="rating">Top Rated</option>
+        <option value="newest">Newest First</option>
+      </select>
+      <span class="results-count" id="resultsCount">Loading...</span>
+    </div>
+  </div>
+
+  <section class="products-section" id="products">
+    <div class="container"><div class="products-grid" id="productsGrid"></div></div>
+  </section>

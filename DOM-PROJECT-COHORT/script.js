@@ -28,22 +28,8 @@ let taskInput = document.querySelector('.addtask form #task-input')
 let taskdetailsInput = document.querySelector('.addtask form textarea')
 let taskCheckbox = document.querySelector('.addtask form #check')
 
-let currentTask=[
-    {
-        task:'coading',
-        details:'details of coading',
-        imp:false
-    },
-   {
-        task:'engineering maths',
-        details:'details of engineering maths',
-        imp:false
-   },
-   {
-        task:'revision',
-        details:'math and coading revision',
-        imp:true
-   }
+var currentTask=[
+   
 ]
 
 
